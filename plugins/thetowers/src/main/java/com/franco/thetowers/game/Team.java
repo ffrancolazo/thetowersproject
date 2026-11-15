@@ -22,11 +22,23 @@ public class Team {
             return;
         }
 
+        if (players.size() > 3) {
+            return;
+        }
+
         players.add(player);
     }
 
     public void removePlayerFromTeam(Player player) {
         players.remove(player);
+    }
+
+    public int getCountPlayers() {
+        return players.size();
+    }
+
+    public boolean existPlayer(Player player){
+        return players.contains(player);
     }
 
 };

@@ -1,12 +1,9 @@
 package com.franco.thetowers;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.franco.thetowers.commands.TeamCommand;
 import com.franco.thetowers.game.GameManager;
-import com.franco.thetowers.game.Team;
 import com.franco.thetowers.listeners.PlayerListener;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
