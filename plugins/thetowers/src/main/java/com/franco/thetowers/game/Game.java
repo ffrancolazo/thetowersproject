@@ -5,4 +5,8 @@ public class Game {
     
     private final String state;
 
+    public Game (String state) {
+        this.state = state;
+    }
+
 }

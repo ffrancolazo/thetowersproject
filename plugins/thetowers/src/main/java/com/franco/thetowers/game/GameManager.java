@@ -28,10 +28,7 @@ public class GameManager {
 
         waitingPlayers.add(player);
 
-        player.sendMessage(
-            "Te uniste a la fila de espera. Posicion: "
-            + waitingPlayers.size()
-        );
+        player.sendRichMessage("<green>[The Towers]</green> <dark_green>Te uniste a la fila de espera. Posición: " + waitingPlayers.size() + ".</dark_green>");
 
     };
 

@@ -1,13 +1,20 @@
 package com.franco.thetowers;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.franco.thetowers.commands.TeamCommand;
 import com.franco.thetowers.game.GameManager;
+import com.franco.thetowers.game.Team;
 import com.franco.thetowers.listeners.PlayerListener;
 
+import io.papermc.paper.command.brigadier.BasicCommand;
+
 /**
- * Documentacion de interes: https://docs.papermc.io/paper/dev/command-api/basics/command-tree/
- *                           https://jd.papermc.io/paper/26.3/
+ * Documentacion de interes:
+ * https://docs.papermc.io/paper/dev/command-api/basics/command-tree/
+ * https://jd.papermc.io/paper/26.3/
  */
 
 public class TheTowersPlugin extends JavaPlugin {
@@ -17,9 +24,10 @@ public class TheTowersPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        getServer().getPluginManager().registerEvents(
-                new PlayerListener(this),
-                this);
+        BasicCommand teamCommand = new TeamCommand();
+        this.registerCommand("team", teamCommand);
+
+        getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
         gameManager = new GameManager(this);
 
