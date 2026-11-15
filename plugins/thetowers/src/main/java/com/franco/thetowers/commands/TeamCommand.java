@@ -1,9 +1,10 @@
 package com.franco.thetowers.commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.bukkit.entity.Player;
-
 import com.franco.thetowers.game.Team;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
@@ -13,6 +14,7 @@ public class TeamCommand implements BasicCommand {
 
     private final Team redTeam = new Team("red", new ArrayList<>(), 0);
     private final Team blueTeam = new Team("blue", new ArrayList<>(), 0);
+    private final Collection<String> suggest = List.of("list", "red", "blue");
 
     @Override
     public void execute(final CommandSourceStack source, final String[] args) {
@@ -61,4 +63,10 @@ public class TeamCommand implements BasicCommand {
         }
 
     }
+
+    @Override 
+    public Collection<String> suggest(final CommandSourceStack source, final String[] args) {
+        return new ArrayList<>(suggest);
+    }
+
 }
