@@ -6,15 +6,18 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 import com.franco.thetowers.game.Team;
+import com.franco.thetowers.game.TeamManager;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 
 public class TeamCommand implements BasicCommand {
 
-    private final Team redTeam = new Team("red", new ArrayList<>(), 0);
-    private final Team blueTeam = new Team("blue", new ArrayList<>(), 0);
-    private final Collection<String> suggest = List.of("list", "red", "blue");
+    private final TeamManager tm;
+
+    public TeamCommand (TeamManager tm) {
+        this.tm = tm;
+    }
 
     @Override
     public void execute(final CommandSourceStack source, final String[] args) {
@@ -31,32 +34,32 @@ public class TeamCommand implements BasicCommand {
                 source.getSender().sendRichMessage("<green>[The Towers]</green> <blue>Blue team: " + blueTeam.getCountPlayers());
                 break;
             case "red":
-                if (redTeam.existPlayer(playerThatInput) || blueTeam.existPlayer(playerThatInput)) {
+                if (tm.getRedTeam().existPlayer(playerThatInput) || tm.getBlueTeam().existPlayer(playerThatInput)) {
                     source.getSender().sendRichMessage("<green>[The Towers]</green> ¡Ya estás en un equipo!");
                     break;
                 }
 
-                redTeam.addPlayerToTheTeam(playerThatInput);
+                tm.getRedTeam().addPlayerToTheTeam(playerThatInput);
                 source.getSender().sendRichMessage("<green>[The Towers]</green> <red>¡Ingresaste al equipo rojo!");
                 break;
             case "blue":
-                if (blueTeam.existPlayer(playerThatInput) || redTeam.existPlayer(playerThatInput)) {
+                if (tm.getBlueTeam().existPlayer(playerThatInput) || tm.getRedTeam().existPlayer(playerThatInput)) {
                     source.getSender().sendRichMessage("<green>[The Towers]</green> ¡Ya estás en un equipo!");
                     break;
                 }
 
-                blueTeam.addPlayerToTheTeam(playerThatInput);
+                tm.getBlueTeam().addPlayerToTheTeam(playerThatInput);
                 source.getSender().sendRichMessage("<green>[The Towers]</green> <blue>¡Ingresaste al equipo azul!");
                 break;
             case "exit":
-                if (redTeam.existPlayer(playerThatInput)) {
-                    redTeam.removePlayerFromTeam(playerThatInput);
+                if (tm.getRedTeam().existPlayer(playerThatInput)) {
+                    tm.getRedTeam().removePlayerFromTeam(playerThatInput);
                     source.getSender().sendRichMessage("<green>[The Towers]</green> Abandonaste tu equipo.");
                     break;
                 }
 
-                if (blueTeam.existPlayer(playerThatInput)) {
-                    blueTeam.removePlayerFromTeam(playerThatInput);
+                if (tm.getBlueTeam().existPlayer(playerThatInput)) {
+                    tm.getBlueTeam().removePlayerFromTeam(playerThatInput);
                     source.getSender().sendRichMessage("<green>[The Towers]</green> Abandonaste tu equipo.");
                     break;
                 }
@@ -66,7 +69,10 @@ public class TeamCommand implements BasicCommand {
 
     @Override 
     public Collection<String> suggest(final CommandSourceStack source, final String[] args) {
-        return new ArrayList<>(suggest);
+        if (args.length == 1) {
+            return List.of("list", "red", "blue", "exit");
+        }
+        return List.of();
     }
 
 }
